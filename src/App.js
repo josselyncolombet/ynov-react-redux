@@ -1,25 +1,33 @@
-import logo from './logo.svg';
+import {useState} from 'react'
 import './App.css';
+import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import * as fromCounterActions from './actions/counter'
+import * as fromTodosActions from './actions/todos'
 
-function App() {
+function App(props) {
+
+ 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <>
+
+   <h1>TODOS</h1>
+    <button onClick={() => props.getTodos()}>GET TODOS</button>
+    
+   </>
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  counter: state.counterReducer,
+  todos: state.todoReducer
+})
+
+const mapDispatchToProps = dispatch => ({
+  increment: () => dispatch(fromCounterActions.increment()),
+  decrement: () => dispatch(fromCounterActions.decrement()),
+  getTodos: () => dispatch(fromTodosActions.getTodo())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
